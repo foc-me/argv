@@ -7,10 +7,10 @@ function isDeclare(target) {
 }
 
 const regs = [
-    { option: "--=", test: /^--([\w-]+)=(.+)$/ },
-    { option: "--", test: /^--([\w-]+)$/ },
-    { option: "-", test: /^-([\w-]+)$/ },
-    { option: "_", test: /([\w-]+)/ }
+    { option: "--=", test: /^--(\w[\w-]*)=(.+)?$/ },
+    { option: "--", test: /^--(\w[\w-]*)$/ },
+    { option: "-", test: /^-(\w+)$/ },
+    { option: "_", test: /(.+)/ }
 ]
 function testRegs(target) {
     for (const { option, test } of regs) {
