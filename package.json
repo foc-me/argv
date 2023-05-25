@@ -1,0 +1,14 @@
+{
+  "name": "@focme/argv",
+  "version": "1.0.0",
+  "description": "node command arguments formater",
+  "main": "index.js",
+  "files": ["index.js", "readme.md", "package.json"],
+  "author": "focme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/foc-me/argv"
+  },
+  "license": "MIT",
+  "private": false
+}
