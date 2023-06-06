@@ -20,24 +20,42 @@ function testRegs(target) {
     return { option: "", match: [, target] }
 }
 
-function getArgv() {
+function nil(value) {
+    return value === undefined || value === null || value === ""
+}
+
+function getArgv(argv) {
+    if (!nil(argv)) {
+        if (typeof argv === "string") {
+            return argv.split(" ").filter(i => !nil(i))
+        }
+        return [argv.toString()]
+    } 
     if (process && process.argv) {
         return process.argv.slice(2)
     }
     return []
 }
 
-function nil(value) {
-    return value === undefined || value === null || value === ""
+function setMap(map, key, value) {
+    if (!map.has(key)) map.set(key, value)
+    else {
+        let item = map.get(key)
+        if (Array.isArray(item)) item.push(value)
+        else {
+            const next = [item, value]
+            map.set(key, next)
+        }
+    }
 }
 
 function insertSet(map, key, value) {
     const bo = isDeclare(value) || nil(value)
     if (Array.isArray(key)) {
         key.forEach(current => {
-            map.set(current, bo || value)
+            setMap(map, current, bo || value)
         })
-    } else map.set(key, bo || value)
+    } else setMap(map, key, bo || value)
     return !bo
 }
 
@@ -49,8 +67,8 @@ function insertVariable(map, value) {
     variables.push(value)
 }
 
-function createArgv(argv = []) {
-    const args = argv.length > 0 ? argv : getArgv()
+function createArgv(argv) {
+    const args = getArgv(argv)
     const result = new Map()
 
     while (args.length > 0) {
