@@ -1,6 +1,6 @@
 {
   "name": "@focme/argv",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "node command arguments formater",
   "main": "index.js",
   "types": "index.d.ts",
