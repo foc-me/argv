@@ -3,6 +3,7 @@
   "version": "1.0.1",
   "description": "node command arguments formater",
   "main": "index.js",
+  "types": "index.d.ts",
   "files": ["index.js", "readme.md", "package.json"],
   "author": "focme",
   "repository": {
