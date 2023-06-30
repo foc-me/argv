@@ -1,4 +1,5 @@
 const declare = [/^-.+$/, /^--.+$/]
+
 function isDeclare(target) {
     for (const reg of declare) {
         if (reg.test(target)) return true
@@ -7,11 +8,14 @@ function isDeclare(target) {
 }
 
 const regs = [
+    { option: "__", test: /^--$/ },
     { option: "--=", test: /^--(\w[\w-]*)=(.+)?$/ },
     { option: "--", test: /^--(\w[\w-]*)$/ },
+    { option: "-=", test: /^-(\w+)=(.+)?$/ },
     { option: "-", test: /^-(\w+)$/ },
     { option: "_", test: /(.+)/ }
 ]
+
 function testRegs(target) {
     for (const { option, test } of regs) {
         const match = target.match(test)
@@ -27,10 +31,13 @@ function nil(value) {
 function getArgv(argv) {
     if (!nil(argv)) {
         if (typeof argv === "string") {
-            return argv.split(" ").filter(i => !nil(i))
+            argv = argv.split(" ")
         }
-        return [argv.toString()]
-    } 
+        if (!Array.isArray(argv)) {
+            argv = [argv]
+        }
+        return argv.filter(i => !nil(i))
+    }
     if (process && process.argv) {
         return process.argv.slice(2)
     }
@@ -59,6 +66,14 @@ function insertSet(map, key, value) {
     return !bo
 }
 
+function insertIgnore(map, value) {
+    const variables = map.get("__") || []
+    if (!Array.isArray(map.get("__"))) {
+        map.set("__", variables)
+    }
+    variables.push(...value)
+}
+
 function insertVariable(map, value) {
     const variables = map.get("_") || []
     if (!Array.isArray(map.get("_"))) {
@@ -71,11 +86,14 @@ function createArgv(argv) {
     const args = getArgv(argv)
     const result = new Map()
 
-    while (args.length > 0) {
+    main: while (args.length > 0) {
         const current = args.shift()
         const { option, match } = testRegs(current)
         let [, phf, phs] = match
         switch (option) {
+            case "__":
+                insertIgnore(result, args)
+                break main
             case "-":
                 phf = phf.split("")
             case "--":
@@ -83,6 +101,8 @@ function createArgv(argv) {
                     args.shift()
                 }
                 break
+            case "-=":
+                phf = phf.split("")
             case "--=":
                 insertSet(result, phf, phs)
                 break
@@ -95,6 +115,7 @@ function createArgv(argv) {
     result.object = function() {
         return Object.fromEntries(this)
     }
+
     return result
 }
 
