@@ -124,7 +124,6 @@ function createArgv(options) {
     main: while (args.length > 0) {
         const current = args.shift()
         const { option, match } = testRegs(current)
-        console.log(option, match)
         let [, phf, phs] = match
         switch (option) {
             case "__":
@@ -204,7 +203,6 @@ function createArgv(options) {
             const origin = originKey(key)
             return !mapKeyIncludes(pipes, origin)
         })
-        console.log(unpipedKeys)
         const shouldContinue = nil(unpipedCallback) || (typeof unpipedCallback === "function" && unpipedCallback(unpipedKeys) === true)
         if (shouldContinue) {
             for (const [key, { callback, type }] of entries(pipes.entries())) {
