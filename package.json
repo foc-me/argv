@@ -1,6 +1,6 @@
 {
   "name": "@focme/argv",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "node command arguments formater",
   "keywords": [
     "node",
