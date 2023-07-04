@@ -220,4 +220,4 @@ function createArgv(options) {
     return argv
 }
 
-module.exports = createArgv
+export default createArgv
