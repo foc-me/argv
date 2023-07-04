@@ -2,14 +2,35 @@
   "name": "@focme/argv",
   "version": "1.1.1",
   "description": "node command arguments formater",
+  "keywords": [
+    "node",
+    "command",
+    "option"
+  ],
+  "type": "module",
+  "private": true,
   "main": "index.js",
+  "module": "index.esm.js",
   "types": "index.d.ts",
-  "files": ["index.js", "index.d.ts", "readme.md", "package.json"],
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "index.esm.js",
+    "readme.md",
+    "package.json"
+  ],
   "author": "focme",
   "repository": {
     "type": "git",
     "url": "https://github.com/foc-me/argv"
   },
   "license": "MIT",
-  "private": false
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "devDependencies": {
+    "@focme/stringify-json": "^1.0.0",
+    "rollup": "^3.26.0",
+    "rollup-plugin-copy": "^3.4.0"
+  }
 }
