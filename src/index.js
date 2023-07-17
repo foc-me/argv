@@ -147,7 +147,7 @@ function createArgv(options) {
         }
     }
 
-    argv.obj = function() {
+    argv.opt = function() {
         const values = entries(this.entries()).map(([key, value]) => {
             if (globalKeys.includes(key)) return [key, value]
             return [originKey(key), value]
@@ -164,8 +164,7 @@ function createArgv(options) {
     }
 
     argv.append = function(options, type) {
-        const Args = formatAppendOptions(options)
-        for (const [key, value] of Args) {
+        for (const [key, value] of formatAppendOptions(options)) {
             if (globalKeys.includes(key)) {
                 insertNested(this, value, key)
             } else {
@@ -212,6 +211,7 @@ function createArgv(options) {
                     const value = this.get(matchKey)
                     await callback(value)
                 }
+                if (type === "break") break
             }
             pipes.clear()
         }

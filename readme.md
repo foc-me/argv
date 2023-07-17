@@ -13,7 +13,7 @@ const argvObject = argv.object() // an object
 
 `createArgv()` will return a map object for the options  
 `createArgv().object()` will return an object for the options  
-`createArgv().obj()` will return an object for the options that every key removed the leading `-` or `--`  
+`createArgv().opt()` will return an object for the options that every key removed the leading `-` or `--`  
 `createArgv().array()` will return an entries of the options map  
 
 
@@ -26,24 +26,40 @@ console.log(createArgv())
 console.log(createArgv().object())
 // { "--config": "./webpack/webpack.dev.config" }
 
-console.log(createArgv().obj())
+console.log(createArgv().opt())
 // { "config": "./webpack/webpack.dev.config" }
 
 console.log(createArgv().array())
-// [["config", "./webpack/webpack.dev.config"]]
+// [["--config", "./webpack/webpack.dev.config"]]
 ```
 
 ## pipe and commit  
+
+**pipe**  
+
+```javascript
+pipe(command, callback, type)
+```
 
 use `pipe()` function to put a callback into a map for one key in the options  
 the callback could be an async function  
 
 ```javascript
-createArgv().pipe("key", value => { ... })
+// call this pipe callback while there is a command --key
+createArgv().pipe("key", value => { ... }).commit(() => { ... })
+
+// always call this pipe callback whether there is a command --key
+// the value will be undefined
+createArgv().pipe("key", value => { ... }, "always").commit(() => { ... })
+
+// will not call the pipe callbacks after this pipe if there is a command --key
+createArgv().pipe("key", value => { ... }, "break").commit(() => { ... })
 ```
 
+**commit**  
+
 use `commit()` function to run the callbacks in the pipe  
-after complete the pipe will be cleard
+after `commit()` complete the pipe will be cleard
 
 ```javascript
 await createArgv().pipe(key, value => {
