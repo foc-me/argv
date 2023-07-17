@@ -1,12 +1,16 @@
-const createArgv = require("../index")
+import createArgv from "../src/index.js"
 
 console.log(createArgv().object())
-// console.log(createArgv().obj())
-// console.log(createArgv().array())
+console.log(createArgv().opt())
+console.log(createArgv().array())
 
-createArgv().pipe("v", () => {
+createArgv().pipe("h", () => {
+    console.log("-v for version")
+}, "break").pipe("v", () => {
     console.log("version 10.01")
-}).commit(keys => {
+}).pipe("~", () => {
+    console.log("always")
+}, "always").commit(keys => {
     if (keys.length > 0) {
         console.log(`bad option ${keys[0]}`)
     }

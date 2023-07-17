@@ -1,20 +1,13 @@
-export declare type ArgvValue = true | string | string[]
-export declare type AppendOption = ArgvValue | Record<string, any>
-export declare const enum PipeWay {
-    always = "always",
-    ignore = "ignore"
-}
-export declare const enum AppendReplace {
-    append = "append",
-    replace = "replace",
-    ignore = "ignore"
-}
+export declare type ArgvValue = true | string | string[];
+export declare type AppendOption = string | string[] | Record<string, any>;
+export declare type PipeWay = "ignore" | "always" | "break";
+export declare type AppendType = "append" | "replace" | "ignore";
 export declare interface Argv extends Map<string, ArgvValue> {
-    obj(): Record<string, ArgvValue>;
+    opt(): Record<string, ArgvValue>;
     object(): Record<string, ArgvValue>;
     array(): [string, ArgvValue][];
-    pipe(key: string, callback: (value: ArgvValue) => void, type = PipeWay.ignore): Argv;
-    commit(unpipedCallback?: (keys: string[]) => boolean): void
-    append(option: AppendOption, type: AppendReplace): Argv;
+    append(option: AppendOption, type: AppendType): Argv;
+    pipe(key: string, callback: (value: ArgvValue) => void, type: PipeWay): Argv;
+    commit(unpipedCallback?: (keys: string[]) => boolean): void;
 }
 export default function createArgv(arguments?: string | string[]): Argv;
