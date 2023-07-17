@@ -6,8 +6,8 @@ export declare interface Argv extends Map<string, ArgvValue> {
     opt(): Record<string, ArgvValue>;
     object(): Record<string, ArgvValue>;
     array(): [string, ArgvValue][];
-    append(option: AppendOption, type: AppendType): Argv;
-    pipe(key: string, callback: (value: ArgvValue) => void, type: PipeWay): Argv;
+    pipe(key: string, callback: (value: ArgvValue) => void, type: PipeWay = "ignore"): Argv;
+    append(option: AppendOption, type: AppendType = "append"): Argv;
     commit(unpipedCallback?: (keys: string[]) => boolean): void;
 }
 export default function createArgv(arguments?: string | string[]): Argv;
