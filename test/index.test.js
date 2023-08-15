@@ -5,8 +5,8 @@ console.log(createArgv().opt())
 console.log(createArgv().array())
 
 createArgv().pipe("h", () => {
-    console.log("-v for version")
-}, "break").pipe("v", () => {
+    console.log("-v, --version for version")
+}, "break").pipe(["v", "version"], () => {
     console.log("version 10.01")
 }).pipe("~", () => {
     console.log("always")

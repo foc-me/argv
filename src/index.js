@@ -187,8 +187,11 @@ function createArgv(options) {
     }
 
     const pipes = new Map()
-    argv.pipe = function(key, callback, type = "ignore") {
-        pipes.set(key, { callback, type })
+    argv.pipe = function(keys, callback, type = "ignore") {
+        keys = Array.isArray(keys) ? keys : [keys]
+        for (const key of keys) {
+            pipes.set(key, { callback, type })
+        }
         return this
     }
 
@@ -206,7 +209,7 @@ function createArgv(options) {
         if (shouldContinue) {
             for (const [key, { callback, type }] of entries(pipes.entries())) {
                 const matchKey = mapKeyIncludes(this, key)
-                if (!matchKey && type === "ignore") continue
+                if (!matchKey && type !== "always") continue
                 if (typeof callback === "function") {
                     const value = this.get(matchKey)
                     await callback(value)
