@@ -1,5 +1,3 @@
-"use strict"
-
 const declare = [/^-.+$/, /^--.+$/]
 const globalKeys = ["_", "__"]
 

@@ -1,4 +1,4 @@
-# create-argv
+# @focme/argv
 
 a useless node arguments formater  
 

@@ -1,17 +1,24 @@
 {
   "name": "@focme/argv",
-  "version": "3.0.2",
+  "version": "4.0.0",
   "description": "node command arguments formater",
   "keywords": [
     "node",
     "command",
     "option"
   ],
-  "type": "module",
   "private": true,
-  "main": "index.js",
-  "module": "index.esm.js",
-  "types": "index.d.ts",
+  "type": "module",
+  "main": "./index.js",
+  "module": "./index.esm.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.esm.js",
+      "default": "./index.js"
+    }
+  },
   "files": [
     "index.js",
     "index.d.ts",
@@ -30,7 +37,7 @@
   },
   "devDependencies": {
     "@focme/stringify-json": "^1.0.0",
-    "rollup": "^3.26.0",
+    "rollup": "^3.29.5",
     "rollup-plugin-copy": "^3.4.0"
   }
 }
