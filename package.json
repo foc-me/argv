@@ -10,7 +10,10 @@
   "type": "module",
   "private": true,
   "main": "index.js",
-  "module": "index.esm.js",
+  "exports": {
+    "import": "./index.esm.js",
+    "default": "./index.js"
+  },
   "types": "index.d.ts",
   "files": [
     "index.js",

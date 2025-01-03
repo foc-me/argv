@@ -1,7 +1,7 @@
 import copy from "rollup-plugin-copy"
 import stringify from "@focme/stringify-json"
 
-const attrs = ["name", "version", "description", "keywords", "main", "module", "types", "files", "author", "repository", "license"]
+const attrs = ["name", "version", "description", "keywords", "main", "exports", "types", "files", "author", "repository", "license"]
 function pickUp(packageInfo) {
     const results = attrs.map(attr => {
         if (typeof attr === "string") return [attr, packageInfo[attr]]
@@ -14,7 +14,7 @@ export default {
     input: "./src/index.js",
     output: [
         { file: "./dist/index.js", format: "cjs" },
-        { file: "./dist/index.esm.js", format: "es" }
+        { file: "./dist/index.esm.js", format: "esm" }
     ],
     plugins: [copy({
         targets: [
