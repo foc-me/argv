@@ -7,14 +7,14 @@ export declare interface Argv extends Map<string, ArgvValue> {
     object(): Record<string, ArgvValue>;
     array(): [string, ArgvValue][];
     /**
-     * @param {string | string[]} keys 
-     * @param {(value: ArgvValue) => void} callback
-     * @param {PipeWay} type default value "ignore"
+     * @param keys keys 
+     * @param callback callback
+     * @param type type default value "ignore"
      */
     pipe(keys: string | string[], callback: (value: ArgvValue) => void, type?: PipeWay): Argv;
     /**
-     * @param {AppendOption} option 
-     * @param {AppendType} type default value "append"
+     * @param option option 
+     * @param type type default value "append"
      */
     append(option: AppendOption, type?: AppendType): Argv;
     commit(unpipedCallback?: (keys: string[]) => boolean): void;
