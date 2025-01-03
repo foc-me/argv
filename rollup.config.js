@@ -1,7 +1,30 @@
+import { createRequire } from "node:module"
 import copy from "rollup-plugin-copy"
 import stringify from "@focme/stringify-json"
 
-const attrs = ["name", "version", "description", "keywords", "main", "exports", "types", "files", "author", "repository", "license"]
+const require = createRequire(import.meta.url)
+const pkg = require("./package.json")
+
+const banner = `/**
+ * ${pkg.name} v${pkg.version}
+ * @license MIT
+ * Copyright (c) 2025 - present Fat Otaku Team
+ **/`
+
+const attrs = [
+    "name",
+    "version",
+    "description",
+    "keywords",
+    "main",
+    "module",
+    "types",
+    "exports",
+    "files",
+    "author",
+    "repository",
+    "license"
+]
 function pickUp(packageInfo) {
     const results = attrs.map(attr => {
         if (typeof attr === "string") return [attr, packageInfo[attr]]
@@ -13,8 +36,8 @@ function pickUp(packageInfo) {
 export default {
     input: "./src/index.js",
     output: [
-        { file: "./dist/index.js", format: "cjs" },
-        { file: "./dist/index.esm.js", format: "esm" }
+        { file: "./dist/index.js", format: "cjs", banner },
+        { file: "./dist/index.esm.js", format: "esm", banner }
     ],
     plugins: [copy({
         targets: [
