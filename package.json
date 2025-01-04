@@ -16,7 +16,7 @@
     ".": {
       "types": "./index.d.ts",
       "import": "./index.esm.js",
-      "default": "./index.js"
+      "require": "./index.js"
     }
   },
   "files": [
